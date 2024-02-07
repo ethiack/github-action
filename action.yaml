@@ -1,0 +1,96 @@
+name: 'Ethiack Job Manager Action'
+description: 'Integrates Ethiack Job Manager with GitHub Actions for managing Artiacker jobs.'
+author: 'Ethiack, Lda.'
+
+branding:
+  icon: 'search'
+  color: 'green'
+
+inputs:
+  command:
+    description: 'The command to run. Available options are "launch", "cancel", "info", "list", "status", "success", "await", and "check".'
+    required: true
+  uuid:
+    description: 'The UUID of the job. Required for commands "cancel", "info", "status", "success", and "await".'
+    required: false
+    default: ''
+  url:
+    description: 'The URL of the target service. Required for commands "launch", and "check".'
+    required: false
+    default: ''
+  args:
+    description: 'The arguments to pass to the job.'
+    required: false
+    default: ''
+
+outputs:
+  response:
+    description: 'The response from the Ethiack Job Manager package.'
+    value: ${{ steps.ethiack-run-command.outputs.response }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Setup environment
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install --user --upgrade pipx
+        echo "PATH=$PATH:/root/.local/bin" >> $GITHUB_ENV
+        pipx install ethiack-job-manager
+      shell: bash
+
+    - name: Execute Ethiack Job Manager Command
+      id: ethiack-run-command
+      run: |
+        # Run ethiack-job-manager
+        
+        set +e # Disable exit on error
+
+        # Prepare command
+        COMMAND="ethiack-job-manager ${{ inputs.command }}"
+
+        ## Add args
+        if [ -n "${{ inputs.args }}" ]; then
+            COMMAND="$COMMAND ${{ inputs.args }}"
+        fi
+
+        ## Add url input if needed 
+        if [ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]; then
+            if [ -n "${{ inputs.url }}" ]; then
+                COMMAND="$COMMAND ${{ inputs.url }}"
+            else
+                echo "Error: URL is required for the ${{ inputs.command }} command."
+                exit 1
+            fi
+        fi
+
+        ## Add uuid input if needed
+        if [ "${{ inputs.command }}" = "cancel" ] || [ "${{ inputs.command }}" = "info" ] || [ "${{ inputs.command }}" = "status" ] || [ "${{ inputs.command }}" = "success" ] || [ "${{ inputs.command }}" = "await" ]; then
+            if [ -n "${{ inputs.uuid }}" ]; then
+                COMMAND="$COMMAND ${{ inputs.uuid }}"
+            else
+                echo "Error: UUID is required for the ${{ inputs.command }} command."
+                exit 1
+            fi
+        fi
+
+        # Run
+        echo "[ETHIACK-JOB-MANAGER] Executing command: $COMMAND"
+        RESPONSE=$($COMMAND)
+        EXIT_CODE=$? 
+        echo "[ETHIACK-JOB-MANAGER] Response:"
+        echo "$RESPONSE"
+        echo "response<<EOF"$'\n'"$RESPONSE"$'\n'EOF >> $GITHUB_OUTPUT
+        echo "[ETHIACK-JOB-MANAGER] Finished."
+
+        set -e # Re-enable immediate exit on error
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "[ETHIACK-JOB-MANAGER] Command failed with exit code $EXIT_CODE."
+          exit $EXIT_CODE
+        fi
+      shell: bash
