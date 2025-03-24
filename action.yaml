@@ -1,6 +1,6 @@
 name: 'Ethiack Job Manager Action'
 description: 'Integrates Ethiack Job Manager with GitHub Actions for managing Artiacker jobs.'
-author: 'Ethiack, Lda.'
+author: 'Ethiack, Lda'
 
 branding:
   icon: 'search'
@@ -16,6 +16,14 @@ inputs:
     default: ''
   url:
     description: 'The URL of the target service. Required for commands "launch", and "check".'
+    required: false
+    default: ''
+  beacon_id:
+    description: 'The beacon ID of the service. Optional for commands "launch" and "check".'
+    required: false
+    default: ''
+  event_slug:
+    description: 'The event slug of the service. Optional for commands "launch" and "check".'
     required: false
     default: ''
   args:
@@ -68,7 +76,14 @@ runs:
                 exit 1
             fi
         fi
-
+        ## Add beacon_id input if provided for launch or check
+        if ([ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]) && [ -n "${{ inputs.beacon_id }}" ]; then
+            COMMAND="$COMMAND --beacon-id ${{ inputs.beacon_id }}"
+        fi
+        ## Add event_slug input if provided for launch or check
+        if ([ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]) && [ -n "${{ inputs.event_slug }}" ]; then
+            COMMAND="$COMMAND --event-slug ${{ inputs.event_slug }}"
+        fi
         ## Add uuid input if needed
         if [ "${{ inputs.command }}" = "cancel" ] || [ "${{ inputs.command }}" = "info" ] || [ "${{ inputs.command }}" = "status" ] || [ "${{ inputs.command }}" = "success" ] || [ "${{ inputs.command }}" = "await" ]; then
             if [ -n "${{ inputs.uuid }}" ]; then
