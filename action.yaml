@@ -77,12 +77,16 @@ runs:
             fi
         fi
         ## Add beacon_id input if provided for launch or check
-        if ([ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]) && [ -n "${{ inputs.beacon_id }}" ]; then
-            COMMAND="$COMMAND --beacon-id ${{ inputs.beacon_id }}"
+        if [ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]; then
+            if [ -n "${{ inputs.beacon_id }}" ]; then
+                COMMAND="$COMMAND --beacon-id ${{ inputs.beacon_id }}"
+            fi
         fi
         ## Add event_slug input if provided for launch or check
-        if [ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ] && [ -n "${{ inputs.event_slug }}" ]; then
-            COMMAND="$COMMAND --event-slug ${{ inputs.event_slug }}"
+        if [ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]; then
+            if [ -n "${{ inputs.event_slug }}" ]; then
+                COMMAND="$COMMAND --event-slug ${{ inputs.event_slug }}"
+            fi
         fi
         ## Add uuid input if needed
         if [ "${{ inputs.command }}" = "cancel" ] || [ "${{ inputs.command }}" = "info" ] || [ "${{ inputs.command }}" = "status" ] || [ "${{ inputs.command }}" = "success" ] || [ "${{ inputs.command }}" = "await" ]; then
