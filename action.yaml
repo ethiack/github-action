@@ -81,7 +81,7 @@ runs:
             COMMAND="$COMMAND --beacon-id ${{ inputs.beacon_id }}"
         fi
         ## Add event_slug input if provided for launch or check
-        if ([ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]) && [ -n "${{ inputs.event_slug }}" ]; then
+        if [ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ] && [ -n "${{ inputs.event_slug }}" ]; then
             COMMAND="$COMMAND --event-slug ${{ inputs.event_slug }}"
         fi
         ## Add uuid input if needed
