@@ -1,3 +1,13 @@
+## [1.1.0](https://github.com/ethiack/github-action/compare/1.0.0...1.1.0) (2025-04-10)
+
+### 🦊 CI/CD
+
+* update commitlint config ([df9d096](https://github.com/ethiack/github-action/commit/df9d096ec2b1e4bb1b6fdefc195d3c37324cbea5))
+
+### 🚀 Features
+
+* add Beacon and Multi-Event capabilities ([#2](https://github.com/ethiack/github-action/issues/2)) ([aff8cec](https://github.com/ethiack/github-action/commit/aff8cecc753dcbf5404c60907e05be4d7c414eae))
+
 ## [1.1.0-rc.1](https://github.com/ethiack/github-action/compare/1.0.0...1.1.0-rc.1) (2025-04-08)
 
 ### 🚀 Features
