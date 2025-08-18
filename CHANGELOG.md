@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/ethiack/github-action/compare/1.1.0...1.1.1) (2025-08-18)
+
+### 📔 Docs
+
+* updating company legal name ([6170221](https://github.com/ethiack/github-action/commit/61702213b8a27ade9a3cb496bc1f2a651c1221f4))
+
 ## [1.1.1-rc.1](https://github.com/ethiack/github-action/compare/1.1.0...1.1.1-rc.1) (2025-08-18)
 
 ### 📔 Docs
