@@ -1,6 +1,6 @@
 name: 'Ethiack Job Manager Action'
 description: 'Integrates Ethiack Job Manager with GitHub Actions for managing Artiacker jobs.'
-author: 'Ethiack, Lda'
+author: 'Ethiack, S.A.'
 
 branding:
   icon: 'search'
