@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/ethiack/github-action/compare/1.1.1...1.1.2) (2025-10-15)
+
+### 📔 Docs
+
+* updating logo ([bd95ee8](https://github.com/ethiack/github-action/commit/bd95ee843226b7221e8c72eb2c95ff4cd5ae03ab))
+
 ## [1.1.2-rc.1](https://github.com/ethiack/github-action/compare/1.1.1...1.1.2-rc.1) (2025-10-15)
 
 ### 📔 Docs
