@@ -70,7 +70,7 @@ To configure, navigate to your repository settings, select `Secrets and variable
 
 ### **Example:** *Launching a job and waiting for its conclusion*
 
-This pipeline launches a scan for the domain  `https://example.ethiack.com` and waits until it finishes (cf. `--wait` flag). If vulnerabilities with severity `medium` or higher are found, the success of the job is interpreted as failing, and this pipeline step will exit with a non-zero status code (cf. `--fail` flag).
+This pipeline launches a scan for the domain `https://example.ethiack.com` and waits until it finishes (cf. `--wait` flag). If vulnerabilities with severity `medium` or higher are found, the success of the job is interpreted as failing, and this pipeline step will exit with a non-zero status code (cf. `--fail` flag).
 
 ```yaml
 jobs:
@@ -138,7 +138,7 @@ This GitHub Action supports every command provided by [Ethiack's Job Manager Pac
 
 > The `url` input refers to the target Uniform Resource Locator (URL) of the service for which the command is run.
 
-> The `uuid` input refers to the Universal Unique Identifier (UUID) of the job for which the command is run.  
+> The `uuid` input refers to the Universal Unique Identifier (UUID) of the job for which the command is run.
 
 #### Optional Arguments
 > The behaviour of these commands can be customized with flags and additional parameters provided inn the `args:` variable in the workflow step (e.g., the `--fail` and `--severity` flags in the examples above). For more information regarding the available options and flags for each command, please refer to the [Job Manager Package](https://github.com/ethiack/job-manager).

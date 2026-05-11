@@ -111,7 +111,7 @@ prepare:
 
   - path: "@semantic-release/git"
     message: "chore(release): release <%= nextRelease.version %> - <%= new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }) %> \n\n<%= nextRelease.notes %>"
-    assets: 
+    assets:
       - CHANGELOG.md
       - pyproject.toml
 

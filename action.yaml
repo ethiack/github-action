@@ -40,7 +40,7 @@ runs:
   using: 'composite'
   steps:
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
       with:
         python-version: '3.11'
 
@@ -56,7 +56,7 @@ runs:
       id: ethiack-run-command
       run: |
         # Run ethiack-job-manager
-        
+
         set +e # Disable exit on error
 
         # Prepare command
@@ -67,7 +67,7 @@ runs:
             COMMAND="$COMMAND ${{ inputs.args }}"
         fi
 
-        ## Add url input if needed 
+        ## Add url input if needed
         if [ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]; then
             if [ -n "${{ inputs.url }}" ]; then
                 COMMAND="$COMMAND ${{ inputs.url }}"
@@ -76,18 +76,21 @@ runs:
                 exit 1
             fi
         fi
+
         ## Add beacon_id input if provided for launch or check
         if [ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]; then
             if [ -n "${{ inputs.beacon_id }}" ]; then
                 COMMAND="$COMMAND --beacon-id ${{ inputs.beacon_id }}"
             fi
         fi
+
         ## Add event_slug input if provided for launch or check
         if [ "${{ inputs.command }}" = "launch" ] || [ "${{ inputs.command }}" = "check" ]; then
             if [ -n "${{ inputs.event_slug }}" ]; then
                 COMMAND="$COMMAND --event-slug ${{ inputs.event_slug }}"
             fi
         fi
+
         ## Add uuid input if needed
         if [ "${{ inputs.command }}" = "cancel" ] || [ "${{ inputs.command }}" = "info" ] || [ "${{ inputs.command }}" = "status" ] || [ "${{ inputs.command }}" = "success" ] || [ "${{ inputs.command }}" = "await" ]; then
             if [ -n "${{ inputs.uuid }}" ]; then
@@ -101,7 +104,7 @@ runs:
         # Run
         echo "[ETHIACK-JOB-MANAGER] Executing command: $COMMAND"
         RESPONSE=$($COMMAND)
-        EXIT_CODE=$? 
+        EXIT_CODE=$?
         echo "[ETHIACK-JOB-MANAGER] Response:"
         echo "$RESPONSE"
         echo "response<<EOF"$'\n'"$RESPONSE"$'\n'EOF >> $GITHUB_OUTPUT
