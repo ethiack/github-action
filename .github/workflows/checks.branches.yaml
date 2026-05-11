@@ -3,8 +3,8 @@ name: Checks (branches)
 on:
   push:
     branches-ignore:
-    - main
-    - staging
+      - main
+      - staging
 
 jobs:
   checks:
